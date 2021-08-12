@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { SIDE_NAV_WIDTH, SIDE_NAV_COLLAPSED_WIDTH, NAV_TYPE_TOP } from 'constants/ThemeConstant';
 import { APP_NAME } from 'configs/AppConfig';
 import { connect } from "react-redux";
 import utils from 'utils';
 import { Grid } from 'antd';
+import { MainContext } from 'App';
 
 const { useBreakpoint } = Grid;
 
 const getLogoWidthGutter = (props, isMobile) => {
+  console.log(props,'gettLogwidt from llogo')
   const { navCollapsed, navType } = props;
   const isNavTop = navType === NAV_TYPE_TOP ? true : false
   if(isMobile && !props.mobileLogo) {
@@ -25,7 +27,6 @@ const getLogoWidthGutter = (props, isMobile) => {
 
 const getLogo = (props) => {
   const { navCollapsed, logoType } = props;
-  console.log(props)
   if(logoType === 'light') {
     if(navCollapsed) {
       return '/img/logo-sm-white.png'
@@ -48,12 +49,13 @@ const getLogoDisplay = (isMobile, mobileLogo) => {
 }
 
 export const Logo = (props) => {
+  const [state, dispatch] = useContext(MainContext);
   const isMobile = !utils.getBreakPoint(useBreakpoint()).includes('lg')
   return (
     <div
-      className={getLogoDisplay(isMobile, props.mobileLogo)} 
-      style={{width: `${getLogoWidthGutter(props, isMobile)}`}}>
-      <img src={getLogo(props)} alt={`${APP_NAME} logo`}/>
+      className={getLogoDisplay(isMobile, state.mobileLogo)} 
+      style={{width: `${getLogoWidthGutter(state, isMobile)}`}}>
+      <img src={getLogo(state)} alt={`${APP_NAME} logo`}/>
     </div>
   )
 }

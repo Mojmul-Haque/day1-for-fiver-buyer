@@ -35,9 +35,10 @@ const themeReducer = (state = initialThemeState, action) => {
         navCollapsed: action.payload,
       };
     case SIDE_NAV_STYLE_CHANGE:
+      console.log(action.payload,'from sideNavStyleChange reducer');
       return {
         ...state,
-        sideNavTheme: action.sideNavTheme,
+        sideNavTheme: action.payload,
       };
     case CHANGE_LOCALE:
       return {
@@ -61,9 +62,11 @@ const themeReducer = (state = initialThemeState, action) => {
         headerNavColor: action.payload,
       };
     case TOGGLE_MOBILE_NAV:
+
+      console.log(action.payload)
       return {
         ...state,
-        mobileNav: action.mobileNav,
+        mobileNav: action.payload,
       };
     case SWITCH_THEME:
       console.log(action.payload, "from thme reducer with main context");
@@ -73,7 +76,7 @@ const themeReducer = (state = initialThemeState, action) => {
         currentTheme: action.payload,
       };
     case DIRECTION_CHANGE:
-      console.log(action.payload,'from direction change with theme reducer')
+      console.log(action.payload, "from direction change with theme reducer");
       return {
         ...state,
         direction: action.payload,

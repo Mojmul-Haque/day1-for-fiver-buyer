@@ -25,3 +25,10 @@ export function onHeaderNavColorChange(headerNavColor) {
     headerNavColor,
   };
 }
+
+export function navStyleChange(sideNavTheme) {
+  return {
+    type: SIDE_NAV_STYLE_CHANGE,
+    sideNavTheme,
+  };
+}

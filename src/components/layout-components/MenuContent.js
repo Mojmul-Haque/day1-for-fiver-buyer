@@ -6,8 +6,11 @@ import Icon from "../util-components/Icon";
 import navigationConfig from "configs/NavigationConfig";
 import { connect } from "react-redux";
 import { SIDE_NAV_LIGHT, NAV_TYPE_SIDE } from "constants/ThemeConstant";
-import utils from 'utils'
+import utils from "utils";
 import { onMobileNavToggle } from "redux/actions/Theme";
+import { useContext } from "react";
+import { MainContext } from "App";
+import { TOGGLE_MOBILE_NAV } from "Context-api/actionsType/ThemeActionType";
 
 const { SubMenu } = Menu;
 const { useBreakpoint } = Grid;
@@ -30,16 +33,29 @@ const setDefaultOpen = (key) => {
 };
 
 const SideNavContent = (props) => {
-	const { sideNavTheme, routeInfo, hideGroupTitle, localization, onMobileNavToggle } = props;
-	const isMobile = !utils.getBreakPoint(useBreakpoint()).includes('lg')
-	const closeMobileNav = () => {
-		if (isMobile) {
-			onMobileNavToggle(false)
-		}
-	}
+  console.log(props, "from SideNavContent");
+  const [state, dispatch] = useContext(MainContext);
+  state.type = "SIDE";
+  console.log(state,'from sidenav ocntent in context')
+  const {
+    sideNavTheme,
+    routeInfo,
+    hideGroupTitle,
+    localization,
+    onMobileNavToggle,
+  } = props;
+
+  const isMobile = !utils.getBreakPoint(useBreakpoint()).includes("lg");
+
+  const closeMobileNav = () => {
+    if (isMobile) {
+      // onMobileNavToggle(false);
+      dispatch({ type: TOGGLE_MOBILE_NAV, payload: false });
+    }
+  };
   return (
     <Menu
-      theme={sideNavTheme === SIDE_NAV_LIGHT ? "light" : "dark"}
+      theme={state.sideNavTheme === SIDE_NAV_LIGHT ? "light" : "dark"}
       mode="inline"
       style={{ height: "100%", borderRight: 0 }}
       defaultSelectedKeys={[routeInfo?.key]}
@@ -71,7 +87,10 @@ const SideNavContent = (props) => {
                       <span>
                         {setLocale(localization, subMenuSecond.title)}
                       </span>
-                      <Link onClick={() => closeMobileNav()} to={subMenuSecond.path} />
+                      <Link
+                        onClick={() => closeMobileNav()}
+                        to={subMenuSecond.path}
+                      />
                     </Menu.Item>
                   ))}
                 </SubMenu>
@@ -79,7 +98,10 @@ const SideNavContent = (props) => {
                 <Menu.Item key={subMenuFirst.key}>
                   {subMenuFirst.icon ? <Icon type={subMenuFirst.icon} /> : null}
                   <span>{setLocale(localization, subMenuFirst.title)}</span>
-                  <Link onClick={() => closeMobileNav()} to={subMenuFirst.path} />
+                  <Link
+                    onClick={() => closeMobileNav()}
+                    to={subMenuFirst.path}
+                  />
                 </Menu.Item>
               )
             )}
@@ -88,7 +110,9 @@ const SideNavContent = (props) => {
           <Menu.Item key={menu.key}>
             {menu.icon ? <Icon type={menu?.icon} /> : null}
             <span>{setLocale(localization, menu?.title)}</span>
-            {menu.path ? <Link onClick={() => closeMobileNav()} to={menu.path} /> : null}
+            {menu.path ? (
+              <Link onClick={() => closeMobileNav()} to={menu.path} />
+            ) : null}
           </Menu.Item>
         )
       )}
@@ -97,6 +121,7 @@ const SideNavContent = (props) => {
 };
 
 const TopNavContent = (props) => {
+  console.log(props, "from top nav content");
   const { topNavColor, localization } = props;
   return (
     <Menu mode="horizontal" style={{ backgroundColor: topNavColor }}>
@@ -156,6 +181,8 @@ const TopNavContent = (props) => {
 };
 
 const MenuContent = (props) => {
+  console.log(props);
+
   return props.type === NAV_TYPE_SIDE ? (
     <SideNavContent {...props} />
   ) : (

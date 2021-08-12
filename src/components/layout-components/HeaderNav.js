@@ -18,13 +18,12 @@ const { Header } = Layout;
 
 export const HeaderNav = (props) => {
   const [state] = useContext(MainContext);
-  const { currentTheme, direction, navCollapsed, navType, headerNavColor } =
-    state;
+  const { direction, currentTheme, headerNavColor } = state;
 
   const {
-    // navCollapsed,
+    navCollapsed,
     mobileNav,
-    // navType,
+    navType,
     // headerNavColor,
     toggleCollapsedNav,
     onMobileNavToggle,
@@ -37,6 +36,8 @@ export const HeaderNav = (props) => {
   const onSearchClose = () => {
     setSearchActive(false);
   };
+
+  console.log(props)
 
   const onToggle = () => {
     if (!isMobile) {

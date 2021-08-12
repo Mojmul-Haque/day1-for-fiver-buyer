@@ -30,6 +30,7 @@ import {
   HEADER_NAV_COLOR_CHANGE,
   DIRECTION_CHANGE,
   TOGGLE_COLLAPSED_NAV,
+  SIDE_NAV_STYLE_CHANGE,
 } from "Context-api/actionsType/ThemeActionType";
 // import { onSwitchTheme2 } from 'Context-api/actions/ThemeAction';
 // import { onSwitchTheme2 } from 'Context-api/actions/ThemeAction';
@@ -107,8 +108,6 @@ export const ThemeConfigurator = ({
   const handleSideNavCollapse = () => {
     dispatch({ type: TOGGLE_COLLAPSED_NAV, payload: !state.navCollapsed });
   };
-
-  console.log(state, "from thme configuration ");
 
   const ontopNavColorClick = (value) => {
     onHeaderNavColorChange("");
@@ -193,6 +192,26 @@ export const ThemeConfigurator = ({
           disabled={isNavTop}
         />
         <ListOption
+          name="Side Nav Color test:"
+          selector={
+            <Radio.Group
+              disabled={isNavTop}
+              size="small"
+              onChange={(e) =>
+                dispatch({
+                  type: SIDE_NAV_STYLE_CHANGE,
+                  payload: e.target.value,
+                })
+              }
+              value={state.sideNavTheme}
+            >
+              <Radio.Button value={SIDE_NAV_LIGHT}>Light</Radio.Button>
+              <Radio.Button value={SIDE_NAV_DARK}>Dark</Radio.Button>
+            </Radio.Group>
+          }
+          disabled={isNavTop}
+        />
+        <ListOption
           name="Side Nav Collapse:"
           selector={
             <Switch
@@ -224,7 +243,10 @@ export const ThemeConfigurator = ({
         <ListOption
           name="Test Theme:"
           selector={
-            <Switch checked={state.currentTheme === "dark"} onChange={toggleTheme2} />
+            <Switch
+              checked={state.currentTheme === "dark"}
+              onChange={toggleTheme2}
+            />
           }
         />
         <ListOption
