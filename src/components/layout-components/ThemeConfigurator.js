@@ -79,7 +79,7 @@ export const ThemeConfigurator = () => {
   };
 
   // handle Navigation Type (top/side)
-  const onNavTypeClick2 = (value) => {
+  const onNavTypeClick = (value) => {
     dispatch({ type: HEADER_NAV_COLOR_CHANGE, payload: "" });
     if (value === NAV_TYPE_TOP) {
       dispatch({ type: TOP_NAV_COLOR_CHANGE, payload: colorOptions[0] });
@@ -89,7 +89,7 @@ export const ThemeConfigurator = () => {
   };
 
   // handle onHeaderNavColorClick
-  const onHeaderNavColorClick2 = (value) => {
+  const onHeaderNavColorClick = (value) => {
     const { rgb } = value;
     const rgba = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.a})`;
     const hex = utils.rgbaToHex(rgba);
@@ -97,13 +97,11 @@ export const ThemeConfigurator = () => {
   };
 
   // handle onHeaderNavColorClick
-  const ontopNavColorClick2 = (value) => {
-    // onHeaderNavColorChange("");
+  const ontopNavColorClick = (value) => {
     dispatch({ type: HEADER_NAV_COLOR_CHANGE, payload: "" });
     const { rgb } = value;
     const rgba = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.a})`;
     const hex = utils.rgbaToHex(rgba);
-    // onTopNavColorChange(hex);
     dispatch({ type: TOP_NAV_COLOR_CHANGE, payload: hex });
   };
 
@@ -122,7 +120,7 @@ export const ThemeConfigurator = () => {
               selector={
                 <ColorPicker
                   color={topNavColor}
-                  colorChange={ontopNavColorClick2}
+                  colorChange={ontopNavColorClick}
                 />
               }
             />
@@ -135,7 +133,7 @@ export const ThemeConfigurator = () => {
               selector={
                 <ColorPicker
                   color={headerNavColor}
-                  colorChange={onHeaderNavColorClick2}
+                  colorChange={onHeaderNavColorClick}
                 />
               }
             />
@@ -147,7 +145,7 @@ export const ThemeConfigurator = () => {
           selector={
             <Radio.Group
               size="small"
-              onChange={(e) => onNavTypeClick2(e.target.value)}
+              onChange={(e) => onNavTypeClick(e.target.value)}
               value={navType}
             >
               <Radio.Button value={NAV_TYPE_SIDE}>Side</Radio.Button>

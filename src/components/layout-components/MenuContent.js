@@ -4,10 +4,11 @@ import { Menu, Grid } from "antd";
 import IntlMessage from "../util-components/IntlMessage";
 import Icon from "../util-components/Icon";
 import navigationConfig from "configs/NavigationConfig";
-import { SIDE_NAV_LIGHT, NAV_TYPE_SIDE,TOGGLE_MOBILE_NAV } from "constants/ThemeConstant";
+import { SIDE_NAV_LIGHT, NAV_TYPE_SIDE } from "constants/ThemeConstant";
 import utils from "utils";
 import { useContext } from "react";
 import { MainContext } from "App";
+import { TOGGLE_MOBILE_NAV } from "Context-api/actionsType/ThemeActionType";
 
 const { SubMenu } = Menu;
 const { useBreakpoint } = Grid;
@@ -30,13 +31,12 @@ const setDefaultOpen = (key) => {
 };
 
 const SideNavContent = (props) => {
-  const [dispatch] = useContext(MainContext);
   const { sideNavTheme, routeInfo, hideGroupTitle, localization } = props;
   const isMobile = !utils.getBreakPoint(useBreakpoint()).includes("lg");
-
+  const [dispatch] = useContext(MainContext);
   const closeMobileNav = () => {
     if (isMobile) {
-      dispatch({ type: TOGGLE_MOBILE_NAV, payload: false });
+      // dispatch({ type: TOGGLE_MOBILE_NAV, payload: false })
     }
   };
   return (
@@ -74,7 +74,7 @@ const SideNavContent = (props) => {
                         {setLocale(localization, subMenuSecond.title)}
                       </span>
                       <Link
-                        onClick={() => closeMobileNav}
+                        onClick={() => closeMobileNav()}
                         to={subMenuSecond.path}
                       />
                     </Menu.Item>
@@ -85,7 +85,7 @@ const SideNavContent = (props) => {
                   {subMenuFirst.icon ? <Icon type={subMenuFirst.icon} /> : null}
                   <span>{setLocale(localization, subMenuFirst.title)}</span>
                   <Link
-                    onClick={() => closeMobileNav}
+                    onClick={() => closeMobileNav()}
                     to={subMenuFirst.path}
                   />
                 </Menu.Item>
@@ -97,7 +97,7 @@ const SideNavContent = (props) => {
             {menu.icon ? <Icon type={menu?.icon} /> : null}
             <span>{setLocale(localization, menu?.title)}</span>
             {menu.path ? (
-              <Link onClick={() => closeMobileNav} to={menu.path} />
+              <Link onClick={() => closeMobileNav()} to={menu.path} />
             ) : null}
           </Menu.Item>
         )
