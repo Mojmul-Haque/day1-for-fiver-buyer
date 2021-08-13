@@ -71,12 +71,11 @@ export const ThemeConfigurator = ({
   direction,
   onDirectionChange,
 }) => {
-
   const [state, dispatch] = useContext(MainContext);
   const isNavTop = state.navType === NAV_TYPE_TOP ? true : false;
-  
+
   const isCollapse = navCollapsed;
-  console.log(navType,'by chacking top nav color change')
+  console.log(navType, "by chacking top nav color change");
 
   //by mojmul
   // for testing purpose with react context api with reducer hooks
@@ -242,22 +241,7 @@ export const ThemeConfigurator = ({
           }
         />
         <ListOption
-          name="Side Nav Color:"
-          selector={
-            <Radio.Group
-              disabled={isNavTop}
-              size="small"
-              onChange={(e) => onNavStyleChange(e.target.value)}
-              value={sideNavTheme}
-            >
-              <Radio.Button value={SIDE_NAV_LIGHT}>Light</Radio.Button>
-              <Radio.Button value={SIDE_NAV_DARK}>Dark</Radio.Button>
-            </Radio.Group>
-          }
-          disabled={isNavTop}
-        />
-        <ListOption
-          name="Side Nav Color test:"
+          name="Side Nav Color by mojmul:"
           selector={
             <Radio.Group
               disabled={isNavTop}
@@ -276,18 +260,6 @@ export const ThemeConfigurator = ({
           }
           disabled={isNavTop}
         />
-        <ListOption
-          name="Side Nav Collapse:"
-          selector={
-            <Switch
-              disabled={isNavTop}
-              checked={isCollapse}
-              onChange={() => toggleCollapsedNav(!navCollapsed)}
-            />
-          }
-          disabled={isNavTop}
-        />
-        {/* //with react context api */}
         <ListOption
           name="Nav Collapse2 by Mojmul :"
           selector={

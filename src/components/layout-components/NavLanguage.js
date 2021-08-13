@@ -2,8 +2,6 @@ import React, { useContext } from "react";
 import { CheckOutlined, GlobalOutlined, DownOutlined } from "@ant-design/icons";
 import { Menu, Dropdown } from "antd";
 import lang from "assets/data/language.data.json";
-import { connect } from "react-redux";
-import { onLocaleChange } from "redux/actions/Theme";
 import { MainContext } from "App";
 import { CHANGE_LOCALE } from "Context-api/actionsType/ThemeActionType";
 
@@ -15,7 +13,6 @@ function getLanguageDetail(locale) {
 const SelectedLanguage = ({ locale }) => {
   const language = getLanguageDetail(locale);
   const { langName, icon } = language;
-
   return (
     <div className="d-flex align-items-center">
       <img
@@ -30,12 +27,9 @@ const SelectedLanguage = ({ locale }) => {
   );
 };
 
-// export const NavLanguage = ({ locale, configDisplay, onLocaleChange }) => {
-export const NavLanguage = () => {
+export const NavLanguage = ({ configDisplay }) => {
   const [state, dispatch] = useContext(MainContext);
-  state.configDisplay = true;
-  const { locale, configDisplay } = state;
-
+  const { locale } = state;
   const languageOption = (
     <Menu>
       {lang.map((elm, i) => {
@@ -45,8 +39,9 @@ export const NavLanguage = () => {
             className={
               locale === elm.langId ? "ant-dropdown-menu-item-active" : ""
             }
-            // onClick={() => onLocaleChange(elm.langId)}
-            onClick={() => dispatch({ CHANGE_LOCALE, payload: elm.langId })}
+            onClick={() =>
+              dispatch({ type: CHANGE_LOCALE, payload: elm.langId })
+            }
           >
             <span className="d-flex justify-content-between align-items-center">
               <div>
@@ -89,9 +84,4 @@ export const NavLanguage = () => {
   );
 };
 
-const mapStateToProps = ({ theme }) => {
-  const { locale } = theme;
-  return { locale };
-};
-
-export default connect(mapStateToProps, { onLocaleChange })(NavLanguage);
+export default NavLanguage;
