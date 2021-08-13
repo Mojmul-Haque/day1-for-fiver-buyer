@@ -125,6 +125,15 @@ export const ThemeConfigurator = ({
     dispatch({ type: NAV_TYPE_CHANGE, payload: value });
   };
 
+  // handle onHeaderNavColorClick by mojmul
+  const onHeaderNavColorClick2 = (value) => {
+    const { rgb } = value;
+    const rgba = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.a})`;
+    const hex = utils.rgbaToHex(rgba);
+    // onHeaderNavColorChange(hex);
+    dispatch({ type: HEADER_NAV_COLOR_CHANGE, payload: hex });
+  };
+
   const ontopNavColorClick = (value) => {
     onHeaderNavColorChange("");
     const { rgb } = value;
@@ -167,16 +176,28 @@ export const ThemeConfigurator = ({
             }
           />
         ) : (
-          <ListOption
-            name="Header Nav Color:"
-            vertical
-            selector={
-              <ColorPicker
-                color={headerNavColor}
-                colorChange={onHeaderNavColorClick}
-              />
-            }
-          />
+          <>
+            <ListOption
+              name="Header Nav Color:"
+              vertical
+              selector={
+                <ColorPicker
+                  color={headerNavColor}
+                  colorChange={onHeaderNavColorClick}
+                />
+              }
+            />
+            <ListOption
+              name="Header Nav Color by mojmul:"
+              vertical
+              selector={
+                <ColorPicker
+                  color={state.headerNavColor}
+                  colorChange={onHeaderNavColorClick2}
+                />
+              }
+            />
+          </>
         )}
 
         <ListOption
