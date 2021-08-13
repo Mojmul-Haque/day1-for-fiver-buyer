@@ -31,6 +31,8 @@ import {
   DIRECTION_CHANGE,
   TOGGLE_COLLAPSED_NAV,
   SIDE_NAV_STYLE_CHANGE,
+  TOP_NAV_COLOR_CHANGE,
+  NAV_TYPE_CHANGE,
 } from "Context-api/actionsType/ThemeActionType";
 // import { onSwitchTheme2 } from 'Context-api/actions/ThemeAction';
 // import { onSwitchTheme2 } from 'Context-api/actions/ThemeAction';
@@ -109,6 +111,20 @@ export const ThemeConfigurator = ({
     dispatch({ type: TOGGLE_COLLAPSED_NAV, payload: !state.navCollapsed });
   };
 
+  // handle Navigation Type (top/side) by mojmul
+  const onNavTypeClick2 = (value) => {
+    // onHeaderNavColorChange("");
+    dispatch({ type: HEADER_NAV_COLOR_CHANGE, payload: "" });
+    if (value === NAV_TYPE_TOP) {
+      // onTopNavColorChange(colorOptions[0]);
+      dispatch({ type: TOP_NAV_COLOR_CHANGE, payload: colorOptions[0] });
+      // toggleCollapsedNav(false);
+      dispatch({ type: TOGGLE_COLLAPSED_NAV, payload: false });
+    }
+    // onNavTypeChange(value);
+    dispatch({ type: NAV_TYPE_CHANGE, payload: value });
+  };
+
   const ontopNavColorClick = (value) => {
     onHeaderNavColorChange("");
     const { rgb } = value;
@@ -176,6 +192,20 @@ export const ThemeConfigurator = ({
             </Radio.Group>
           }
         />
+
+        <ListOption
+          name="Navigation Type by mojmul:"
+          selector={
+            <Radio.Group
+              size="small"
+              onChange={(e) => onNavTypeClick2(e.target.value)}
+              value={state.navType}
+            >
+              <Radio.Button value={NAV_TYPE_SIDE}>Side</Radio.Button>
+              <Radio.Button value={NAV_TYPE_TOP}>Top</Radio.Button>
+            </Radio.Group>
+          }
+        />
         <ListOption
           name="Side Nav Color:"
           selector={
@@ -237,29 +267,10 @@ export const ThemeConfigurator = ({
         <ListOption
           name="Dark Theme:"
           selector={
-            <Switch checked={currentTheme === "dark"} onChange={toggleTheme} />
-          }
-        />
-        <ListOption
-          name="Test Theme:"
-          selector={
             <Switch
               checked={state.currentTheme === "dark"}
               onChange={toggleTheme2}
             />
-          }
-        />
-        <ListOption
-          name="Direction:"
-          selector={
-            <Radio.Group
-              size="small"
-              onChange={(e) => onDirectionChange(e.target.value)}
-              value={direction}
-            >
-              <Radio.Button value={DIR_LTR}>LTR</Radio.Button>
-              <Radio.Button value={DIR_RTL}>RTL</Radio.Button>
-            </Radio.Group>
           }
         />
         <ListOption
@@ -270,8 +281,8 @@ export const ThemeConfigurator = ({
               onChange={handleDirection}
               value={state.direction}
             >
-              <Radio.Button value={DIR_LTR}>LEFT</Radio.Button>
-              <Radio.Button value={DIR_RTL}>RIGHT</Radio.Button>
+              <Radio.Button value={DIR_LTR}>LTR</Radio.Button>
+              <Radio.Button value={DIR_RTL}>RTL</Radio.Button>
             </Radio.Group>
           }
         />

@@ -13,41 +13,45 @@ import {
 } from "constants/ThemeConstant";
 import utils from "utils";
 import { MainContext } from "App";
+import {
+  TOGGLE_COLLAPSED_NAV,
+  TOGGLE_MOBILE_NAV,
+} from "Context-api/actionsType/ThemeActionType";
 
 const { Header } = Layout;
 
-export const HeaderNav = (props) => {
-  const [state] = useContext(MainContext);
+export const HeaderNav = () => {
+  const [state, dispatch] = useContext(MainContext);
   const { direction, currentTheme, headerNavColor } = state;
+  state.isMobile = false;
 
-  const {
-    navCollapsed,
-    mobileNav,
-    navType,
-    // headerNavColor,
-    toggleCollapsedNav,
-    onMobileNavToggle,
-    isMobile,
-    // currentTheme,
-    // direction,
-  } = props;
+  // const {
+  //   navCollapsed,
+  //   mobileNav,
+  //   navType,
+  //   // headerNavColor,
+  //   toggleCollapsedNav,
+  //   onMobileNavToggle,
+  //   isMobile,
+  //   // currentTheme,
+  //   // direction,
+  // } = props;
   const [searchActive, setSearchActive] = useState(false);
 
   const onSearchClose = () => {
     setSearchActive(false);
   };
-
-  console.log(props)
-
   const onToggle = () => {
-    if (!isMobile) {
-      toggleCollapsedNav(!navCollapsed);
+    if (!state.isMobile) {
+      // toggleCollapsedNav(!navCollapsed);
+      dispatch({ type: TOGGLE_COLLAPSED_NAV, payload: !state.navCollapsed });
     } else {
-      onMobileNavToggle(!mobileNav);
+      // onMobileNavToggle(!mobileNav);
+      dispatch({ type: TOGGLE_MOBILE_NAV, payload: !state.mobileNav });
     }
   };
 
-  const isNavTop = navType === NAV_TYPE_TOP ? true : false;
+  const isNavTop = state.navType === NAV_TYPE_TOP ? true : false;
   const mode = () => {
     if (!headerNavColor) {
       return utils.getColorContrast(
@@ -58,10 +62,10 @@ export const HeaderNav = (props) => {
   };
   const navMode = mode();
   const getNavWidth = () => {
-    if (isNavTop || isMobile) {
+    if (isNavTop || state.isMobile) {
       return "0px";
     }
-    if (navCollapsed) {
+    if (state.navCollapsed) {
       return `${SIDE_NAV_COLLAPSED_WIDTH}px`;
     } else {
       return `${SIDE_NAV_WIDTH}px`;
@@ -69,7 +73,7 @@ export const HeaderNav = (props) => {
   };
 
   useEffect(() => {
-    if (!isMobile) {
+    if (!state.isMobile) {
       onSearchClose();
     }
   });
@@ -84,14 +88,14 @@ export const HeaderNav = (props) => {
         <div className="nav" style={{ width: `calc(100% - ${getNavWidth()})` }}>
           <div className="nav-left">
             <ul className="ant-menu ant-menu-root ant-menu-horizontal">
-              {isNavTop && !isMobile ? null : (
+              {isNavTop && !state.isMobile ? null : (
                 <li
                   className="ant-menu-item ant-menu-item-only-child"
                   onClick={() => {
                     onToggle();
                   }}
                 >
-                  {navCollapsed || isMobile ? (
+                  {state.navCollapsed || state.isMobile ? (
                     <MenuUnfoldOutlined className="nav-icon" />
                   ) : (
                     <MenuFoldOutlined className="nav-icon" />
@@ -110,26 +114,28 @@ export const HeaderNav = (props) => {
   );
 };
 
-const mapStateToProps = ({ theme }) => {
-  const {
-    navCollapsed,
-    navType,
-    headerNavColor,
-    mobileNav,
-    currentTheme,
-    direction,
-  } = theme;
-  return {
-    navCollapsed,
-    navType,
-    headerNavColor,
-    mobileNav,
-    currentTheme,
-    direction,
-  };
-};
+// const mapStateToProps = ({ theme }) => {
+//   const {
+//     navCollapsed,
+//     navType,
+//     headerNavColor,
+//     mobileNav,
+//     currentTheme,
+//     direction,
+//   } = theme;
+//   return {
+//     navCollapsed,
+//     navType,
+//     headerNavColor,
+//     mobileNav,
+//     currentTheme,
+//     direction,
+//   };
+// };
 
-export default connect(mapStateToProps, {
-  toggleCollapsedNav,
-  onMobileNavToggle,
-})(HeaderNav);
+// export default connect(mapStateToProps, {
+//   toggleCollapsedNav,
+//   onMobileNavToggle,
+// })(HeaderNav);
+
+export default HeaderNav;

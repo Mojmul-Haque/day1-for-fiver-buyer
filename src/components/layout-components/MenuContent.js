@@ -33,29 +33,25 @@ const setDefaultOpen = (key) => {
 };
 
 const SideNavContent = (props) => {
-  console.log(props, "from SideNavContent");
-  const [state, dispatch] = useContext(MainContext);
-  state.type = "SIDE";
-  console.log(state,'from sidenav ocntent in context')
+  const [ dispatch] = useContext(MainContext);
   const {
     sideNavTheme,
     routeInfo,
     hideGroupTitle,
     localization,
-    onMobileNavToggle,
   } = props;
+
 
   const isMobile = !utils.getBreakPoint(useBreakpoint()).includes("lg");
 
   const closeMobileNav = () => {
     if (isMobile) {
-      // onMobileNavToggle(false);
       dispatch({ type: TOGGLE_MOBILE_NAV, payload: false });
     }
   };
   return (
     <Menu
-      theme={state.sideNavTheme === SIDE_NAV_LIGHT ? "light" : "dark"}
+      theme={sideNavTheme === SIDE_NAV_LIGHT ? "light" : "dark"}
       mode="inline"
       style={{ height: "100%", borderRight: 0 }}
       defaultSelectedKeys={[routeInfo?.key]}
@@ -181,8 +177,6 @@ const TopNavContent = (props) => {
 };
 
 const MenuContent = (props) => {
-  console.log(props);
-
   return props.type === NAV_TYPE_SIDE ? (
     <SideNavContent {...props} />
   ) : (
@@ -190,9 +184,4 @@ const MenuContent = (props) => {
   );
 };
 
-const mapStateToProps = ({ theme }) => {
-  const { sideNavTheme, topNavColor } = theme;
-  return { sideNavTheme, topNavColor };
-};
-
-export default connect(mapStateToProps, { onMobileNavToggle })(MenuContent);
+export default (MenuContent);
