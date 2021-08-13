@@ -29,8 +29,8 @@ const getLogoWidthGutter = (props, isMobile) => {
 };
 
 const getLogo = (props) => {
-  const { navCollapsed, logoType } = props;
-  if (logoType === "light") {
+  const { navCollapsed, logoType,currentTheme } = props;
+  if (currentTheme === "dark") {
     if (navCollapsed) {
       return "/img/logo-sm-white.png";
     }

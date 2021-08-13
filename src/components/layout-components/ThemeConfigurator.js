@@ -130,8 +130,18 @@ export const ThemeConfigurator = ({
     const { rgb } = value;
     const rgba = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.a})`;
     const hex = utils.rgbaToHex(rgba);
-    // onHeaderNavColorChange(hex);
     dispatch({ type: HEADER_NAV_COLOR_CHANGE, payload: hex });
+  };
+
+  // handle onHeaderNavColorClick by mojmul
+  const ontopNavColorClick2 = (value) => {
+    // onHeaderNavColorChange("");
+    dispatch({ type: HEADER_NAV_COLOR_CHANGE, payload: "" });
+    const { rgb } = value;
+    const rgba = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.a})`;
+    const hex = utils.rgbaToHex(rgba);
+    // onTopNavColorChange(hex);
+    dispatch({ type: TOP_NAV_COLOR_CHANGE, payload: hex });
   };
 
   const ontopNavColorClick = (value) => {
@@ -165,16 +175,28 @@ export const ThemeConfigurator = ({
       <div className="mb-5">
         <h4 className="mb-3 font-weight-bold">Navigation</h4>
         {isNavTop ? (
-          <ListOption
-            name="Top Nav Color:"
-            vertical
-            selector={
-              <ColorPicker
-                color={topNavColor}
-                colorChange={ontopNavColorClick}
-              />
-            }
-          />
+          <>
+            <ListOption
+              name="Top Nav Color:"
+              vertical
+              selector={
+                <ColorPicker
+                  color={topNavColor}
+                  colorChange={ontopNavColorClick}
+                />
+              }
+            />
+            <ListOption
+              name="Top Nav Color by mojmul:"
+              vertical
+              selector={
+                <ColorPicker
+                  color={state.topNavColor}
+                  colorChange={ontopNavColorClick2}
+                />
+              }
+            />
+          </>
         ) : (
           <>
             <ListOption
