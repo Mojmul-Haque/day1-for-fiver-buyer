@@ -35,25 +35,21 @@ const themeReducer = (state = initialThemeState, action) => {
         navCollapsed: action.payload,
       };
     case SIDE_NAV_STYLE_CHANGE:
-      console.log(action.payload,'from sideNavStyleChange reducer');
       return {
         ...state,
         sideNavTheme: action.payload,
       };
     case CHANGE_LOCALE:
-      console.log(action.payload)
       return {
         ...state,
         locale: action.payload,
       };
     case NAV_TYPE_CHANGE:
-      console.log(action.payload,'from NAV_TYPE_CHANGE reducer')
       return {
         ...state,
         navType: action.payload,
       };
     case TOP_NAV_COLOR_CHANGE:
-      console.log(action.payload,'from TOP_NAV_COLOR_CHANGE reducer')
       return {
         ...state,
         topNavColor: action.payload,
@@ -64,7 +60,6 @@ const themeReducer = (state = initialThemeState, action) => {
         headerNavColor: action.payload,
       };
     case TOGGLE_MOBILE_NAV:
-      console.log(action.payload,'TOGGLE_MOBILE_NAV from context ')
       return {
         ...state,
         mobileNav: action.payload,

@@ -1,13 +1,11 @@
 import React, { useContext } from "react";
-import { connect } from "react-redux";
 import { NAV_TYPE_TOP } from "constants/ThemeConstant";
 import utils from "utils";
 import MenuContent from "./MenuContent";
 import { MainContext } from "App";
 
-export const TopNav = ({ topNavColor, localization = true }) => {
+export const TopNav = () => {
   const [state] = useContext(MainContext);
-  // const  { topNavColor, localization } =state
   return (
     <div
       className={`top-nav ${utils.getColorContrast(state.topNavColor)}`}
@@ -20,9 +18,4 @@ export const TopNav = ({ topNavColor, localization = true }) => {
   );
 };
 
-const mapStateToProps = ({ theme }) => {
-  const { topNavColor } = theme;
-  return { topNavColor };
-};
-
-export default connect(mapStateToProps)(TopNav);
+export default TopNav;

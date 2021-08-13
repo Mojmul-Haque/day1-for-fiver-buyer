@@ -4,13 +4,10 @@ import { Menu, Grid } from "antd";
 import IntlMessage from "../util-components/IntlMessage";
 import Icon from "../util-components/Icon";
 import navigationConfig from "configs/NavigationConfig";
-import { connect } from "react-redux";
 import { SIDE_NAV_LIGHT, NAV_TYPE_SIDE } from "constants/ThemeConstant";
 import utils from "utils";
-import { onMobileNavToggle } from "redux/actions/Theme";
 import { useContext } from "react";
 import { MainContext } from "App";
-import { TOGGLE_MOBILE_NAV } from "Context-api/actionsType/ThemeActionType";
 
 const { SubMenu } = Menu;
 const { useBreakpoint } = Grid;
@@ -33,20 +30,13 @@ const setDefaultOpen = (key) => {
 };
 
 const SideNavContent = (props) => {
-  const [ dispatch] = useContext(MainContext);
-  const {
-    sideNavTheme,
-    routeInfo,
-    hideGroupTitle,
-    localization,
-  } = props;
-
-
+  const [dispatch] = useContext(MainContext);
+  const { sideNavTheme, routeInfo, hideGroupTitle, localization } = props;
   const isMobile = !utils.getBreakPoint(useBreakpoint()).includes("lg");
 
   const closeMobileNav = () => {
     if (isMobile) {
-      dispatch({ type: TOGGLE_MOBILE_NAV, payload: false });
+      // dispatch({ type: TOGGLE_MOBILE_NAV, payload: false });
     }
   };
   return (
@@ -117,7 +107,6 @@ const SideNavContent = (props) => {
 };
 
 const TopNavContent = (props) => {
-  console.log(props, "from top nav content");
   const { topNavColor, localization } = props;
   return (
     <Menu mode="horizontal" style={{ backgroundColor: topNavColor }}>
@@ -184,4 +173,4 @@ const MenuContent = (props) => {
   );
 };
 
-export default (MenuContent);
+export default MenuContent;

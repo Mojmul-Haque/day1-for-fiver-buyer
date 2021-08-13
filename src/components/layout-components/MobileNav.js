@@ -1,26 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Drawer } from "antd";
-import { connect } from "react-redux";
 import { NAV_TYPE_SIDE } from "constants/ThemeConstant";
 import { Scrollbars } from "react-custom-scrollbars";
 import MenuContent from "./MenuContent";
-import { onMobileNavToggle } from "redux/actions/Theme";
 import Logo from "./Logo";
 import Flex from "components/shared-components/Flex";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import { MainContext } from "App";
+import { TOGGLE_MOBILE_NAV } from "Context-api/actionsType/ThemeActionType";
 
-export const MobileNav = ({
-  sideNavTheme,
-  mobileNav,
-  onMobileNavToggle,
-  routeInfo,
-  hideGroupTitle,
-  localization = true,
-}) => {
-  const props = { sideNavTheme, routeInfo, hideGroupTitle, localization };
-
+export const MobileNav = () => {
+  const [state, dispatch] = useContext(MainContext);
+  const { mobileNav } = state;
   const onClose = () => {
-    onMobileNavToggle(false);
+    dispatch({ type: TOGGLE_MOBILE_NAV, payload: false });
   };
 
   return (
@@ -40,7 +33,7 @@ export const MobileNav = ({
         </Flex>
         <div className="mobile-nav-menu">
           <Scrollbars autoHide>
-            <MenuContent type={NAV_TYPE_SIDE} {...props} />
+            <MenuContent type={NAV_TYPE_SIDE} {...state} />
           </Scrollbars>
         </div>
       </Flex>
@@ -48,9 +41,5 @@ export const MobileNav = ({
   );
 };
 
-const mapStateToProps = ({ theme }) => {
-  const { navCollapsed, sideNavTheme, mobileNav } = theme;
-  return { navCollapsed, sideNavTheme, mobileNav };
-};
 
-export default connect(mapStateToProps, { onMobileNavToggle })(MobileNav);
+export default MobileNav

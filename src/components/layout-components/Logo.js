@@ -5,7 +5,6 @@ import {
   NAV_TYPE_TOP,
 } from "constants/ThemeConstant";
 import { APP_NAME } from "configs/AppConfig";
-// import { connect } from "react-redux";
 import utils from "utils";
 import { Grid } from "antd";
 import { MainContext } from "App";
@@ -29,7 +28,7 @@ const getLogoWidthGutter = (props, isMobile) => {
 };
 
 const getLogo = (props) => {
-  const { navCollapsed,currentTheme } = props;
+  const { navCollapsed, currentTheme } = props;
   if (currentTheme === "dark") {
     if (navCollapsed) {
       return "/img/logo-sm-white.png";
@@ -53,7 +52,6 @@ const getLogoDisplay = (isMobile, mobileLogo) => {
 
 export const Logo = () => {
   const [state] = useContext(MainContext);
-  // state.logoType = "dark";
   const isMobile = !utils.getBreakPoint(useBreakpoint()).includes("lg");
   return (
     <div
@@ -65,10 +63,4 @@ export const Logo = () => {
   );
 };
 
-// const mapStateToProps = ({ theme }) => {
-//   const { navCollapsed, navType } = theme;
-//   return { navCollapsed, navType };
-// };
-
-// export default connect(mapStateToProps)(Logo);
 export default Logo;

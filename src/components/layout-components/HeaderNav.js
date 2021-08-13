@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { connect } from "react-redux";
 import { Layout } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import Logo from "./Logo";
 import NavPanel from "./NavPanel";
 import NavSearch from "./NavSearch";
-import { toggleCollapsedNav, onMobileNavToggle } from "redux/actions/Theme";
 import {
   NAV_TYPE_TOP,
   SIDE_NAV_COLLAPSED_WIDTH,
@@ -17,36 +15,22 @@ import {
   TOGGLE_COLLAPSED_NAV,
   TOGGLE_MOBILE_NAV,
 } from "Context-api/actionsType/ThemeActionType";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 const { Header } = Layout;
 
 export const HeaderNav = () => {
   const [state, dispatch] = useContext(MainContext);
   const { direction, currentTheme, headerNavColor } = state;
-  state.isMobile = false;
-
-  // const {
-  //   navCollapsed,
-  //   mobileNav,
-  //   navType,
-  //   // headerNavColor,
-  //   toggleCollapsedNav,
-  //   onMobileNavToggle,
-  //   isMobile,
-  //   // currentTheme,
-  //   // direction,
-  // } = props;
   const [searchActive, setSearchActive] = useState(false);
-
+  const isMobile = !utils.getBreakPoint(useBreakpoint()).includes("lg");
   const onSearchClose = () => {
     setSearchActive(false);
   };
   const onToggle = () => {
-    if (!state.isMobile) {
-      // toggleCollapsedNav(!navCollapsed);
+    if (!isMobile) {
       dispatch({ type: TOGGLE_COLLAPSED_NAV, payload: !state.navCollapsed });
     } else {
-      // onMobileNavToggle(!mobileNav);
       dispatch({ type: TOGGLE_MOBILE_NAV, payload: !state.mobileNav });
     }
   };
@@ -62,7 +46,7 @@ export const HeaderNav = () => {
   };
   const navMode = mode();
   const getNavWidth = () => {
-    if (isNavTop || state.isMobile) {
+    if (isNavTop || isMobile) {
       return "0px";
     }
     if (state.navCollapsed) {
@@ -71,9 +55,8 @@ export const HeaderNav = () => {
       return `${SIDE_NAV_WIDTH}px`;
     }
   };
-
   useEffect(() => {
-    if (!state.isMobile) {
+    if (!isMobile) {
       onSearchClose();
     }
   });
@@ -88,14 +71,14 @@ export const HeaderNav = () => {
         <div className="nav" style={{ width: `calc(100% - ${getNavWidth()})` }}>
           <div className="nav-left">
             <ul className="ant-menu ant-menu-root ant-menu-horizontal">
-              {isNavTop && !state.isMobile ? null : (
+              {isNavTop && !isMobile ? null : (
                 <li
                   className="ant-menu-item ant-menu-item-only-child"
                   onClick={() => {
                     onToggle();
                   }}
                 >
-                  {state.navCollapsed || state.isMobile ? (
+                  {state.navCollapsed || isMobile ? (
                     <MenuUnfoldOutlined className="nav-icon" />
                   ) : (
                     <MenuFoldOutlined className="nav-icon" />
@@ -113,29 +96,4 @@ export const HeaderNav = () => {
     </Header>
   );
 };
-
-// const mapStateToProps = ({ theme }) => {
-//   const {
-//     navCollapsed,
-//     navType,
-//     headerNavColor,
-//     mobileNav,
-//     currentTheme,
-//     direction,
-//   } = theme;
-//   return {
-//     navCollapsed,
-//     navType,
-//     headerNavColor,
-//     mobileNav,
-//     currentTheme,
-//     direction,
-//   };
-// };
-
-// export default connect(mapStateToProps, {
-//   toggleCollapsedNav,
-//   onMobileNavToggle,
-// })(HeaderNav);
-
 export default HeaderNav;

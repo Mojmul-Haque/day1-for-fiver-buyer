@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import { Route, Switch, Redirect, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 import AppLayout from "layouts/app-layout";
 import AuthLayout from "layouts/auth-layout";
 import AppLocale from "lang";
@@ -10,30 +9,29 @@ import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "configs/AppConfig";
 import useBodyClass from "hooks/useBodyClass";
 import { MainContext } from "App";
 
-export const Views = (props) => {
+export const Views = () => {
   const [state] = useContext(MainContext); //from app.js
-  const { locale, location, direction } = props;
+  const { locale, direction } = state;
+  const location = useLocation();
+
   const currentAppLocale = AppLocale[locale];
-  useBodyClass(`dir-${state.direction}`);
+  useBodyClass(`dir-${direction}`);
 
   return (
     <IntlProvider
       locale={currentAppLocale.locale}
       messages={currentAppLocale.messages}
     >
-      <ConfigProvider
-        locale={currentAppLocale.antd}
-        direction={state.direction}
-      >
+      <ConfigProvider locale={currentAppLocale.antd} direction={direction}>
         <Switch>
           <Route exact path="/">
             <Redirect to={APP_PREFIX_PATH} />
           </Route>
           <Route path={AUTH_PREFIX_PATH}>
-            <AuthLayout direction={state.direction} />
+            <AuthLayout direction={direction} />
           </Route>
           <Route path={APP_PREFIX_PATH}>
-            <AppLayout direction={state.direction} location={location} />
+            <AppLayout direction={direction} location={location} />
           </Route>
         </Switch>
       </ConfigProvider>
@@ -41,10 +39,4 @@ export const Views = (props) => {
   );
 };
 
-const mapStateToProps = ({ theme, auth }) => {
-  const { locale, direction } = theme;
-  const { token } = auth;
-  return { locale, token, direction };
-};
-
-export default withRouter(connect(mapStateToProps)(Views));
+export default Views;

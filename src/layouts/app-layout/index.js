@@ -1,5 +1,4 @@
 import React from "react";
-// import { connect } from "react-redux";
 import SideNav from "components/layout-components/SideNav";
 import TopNav from "components/layout-components/TopNav";
 import Loading from "components/shared-components/Loading";

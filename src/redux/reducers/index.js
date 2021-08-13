@@ -1,10 +1,8 @@
-import { combineReducers } from 'redux';
-import Auth from './Auth';
-import Theme from './Theme';
+import { combineReducers } from "redux";
+import Auth from "./Auth";
 
 const reducers = combineReducers({
-    theme: Theme,
-    auth: Auth
+  auth: Auth,
 });
 
 export default reducers;
