@@ -71,12 +71,16 @@ export const ThemeConfigurator = ({
   direction,
   onDirectionChange,
 }) => {
-  const isNavTop = navType === NAV_TYPE_TOP ? true : false;
+
+  const [state, dispatch] = useContext(MainContext);
+  const isNavTop = state.navType === NAV_TYPE_TOP ? true : false;
+  
   const isCollapse = navCollapsed;
+  console.log(navType,'by chacking top nav color change')
 
   //by mojmul
   // for testing purpose with react context api with reducer hooks
-  const [state, dispatch] = useContext(MainContext);
+  // const [state, dispatch] = useContext(MainContext);
 
   const isNavTop2 = state.navType === NAV_TYPE_TOP ? true : false;
   const isCollapse2 = state.navCollapsed;
@@ -116,12 +120,9 @@ export const ThemeConfigurator = ({
     // onHeaderNavColorChange("");
     dispatch({ type: HEADER_NAV_COLOR_CHANGE, payload: "" });
     if (value === NAV_TYPE_TOP) {
-      // onTopNavColorChange(colorOptions[0]);
       dispatch({ type: TOP_NAV_COLOR_CHANGE, payload: colorOptions[0] });
-      // toggleCollapsedNav(false);
       dispatch({ type: TOGGLE_COLLAPSED_NAV, payload: false });
     }
-    // onNavTypeChange(value);
     dispatch({ type: NAV_TYPE_CHANGE, payload: value });
   };
 
@@ -158,6 +159,7 @@ export const ThemeConfigurator = ({
     onHeaderNavColorChange(hex);
   };
 
+  //step:1
   const onNavTypeClick = (value) => {
     onHeaderNavColorChange("");
     if (value === NAV_TYPE_TOP) {
@@ -177,16 +179,6 @@ export const ThemeConfigurator = ({
         {isNavTop ? (
           <>
             <ListOption
-              name="Top Nav Color:"
-              vertical
-              selector={
-                <ColorPicker
-                  color={topNavColor}
-                  colorChange={ontopNavColorClick}
-                />
-              }
-            />
-            <ListOption
               name="Top Nav Color by mojmul:"
               vertical
               selector={
@@ -199,7 +191,7 @@ export const ThemeConfigurator = ({
           </>
         ) : (
           <>
-            <ListOption
+            {/* <ListOption
               name="Header Nav Color:"
               vertical
               selector={
@@ -208,7 +200,7 @@ export const ThemeConfigurator = ({
                   colorChange={onHeaderNavColorClick}
                 />
               }
-            />
+            /> */}
             <ListOption
               name="Header Nav Color by mojmul:"
               vertical
@@ -222,7 +214,7 @@ export const ThemeConfigurator = ({
           </>
         )}
 
-        <ListOption
+        {/* <ListOption
           name="Navigation Type:"
           selector={
             <Radio.Group
@@ -234,7 +226,7 @@ export const ThemeConfigurator = ({
               <Radio.Button value={NAV_TYPE_TOP}>Top</Radio.Button>
             </Radio.Group>
           }
-        />
+        /> */}
 
         <ListOption
           name="Navigation Type by mojmul:"
